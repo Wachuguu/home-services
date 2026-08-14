@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: tasker-api
+    runtime: docker
+    plan: starter
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: tasker-db
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: tasker-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: tasker-db
+          property: password
+      - key: JWT_SECRET
+        sync: false
+      - key: JAVA_OPTS
+        value: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+      - key: MPESA_CONSUMER_KEY
+        sync: false
+      - key: MPESA_CONSUMER_SECRET
+        sync: false
+      - key: MPESA_PASSKEY
+        sync: false
+      - key: MPESA_SHORTCODE
+        sync: false
+      - key: MPESA_CALLBACK_BASE_URL
+        sync: false
+
+databases:
+  - name: tasker-db
+    plan: starter
+    postgresMajorVersion: "16"
+    ipAllowList: [] # Required for PostGIS extension support in Render in some configurations

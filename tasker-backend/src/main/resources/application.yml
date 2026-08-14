@@ -1,0 +1,35 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/tasker}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    open-in-view: false
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:defaultDevSecretKeyThatIsAtLeast256BitsLong12345}
+    expiration-ms: 86400000
+  search:
+    default-radius-km: 10
+
+mpesa:
+  consumer-key: ${MPESA_CONSUMER_KEY:sandbox_key}
+  consumer-secret: ${MPESA_CONSUMER_SECRET:sandbox_secret}
+  passkey: ${MPESA_PASSKEY:sandbox_passkey}
+  shortcode: ${MPESA_SHORTCODE:174379}
+  callback-base-url: ${MPESA_CALLBACK_BASE_URL:https://your-domain.com}
+  base-url: https://sandbox.safaricom.co.ke
