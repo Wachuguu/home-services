@@ -1,26 +1,28 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../models/payment.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../payment/domain/models/payment.dart';
 import '../../data/datasources/payment_remote_ds.dart';
 
-part 'payment_controller.g.dart';
-
-@riverpod
-class PaymentController extends _$PaymentController {
+class PaymentController extends AsyncNotifier<Payment?> {
   @override
-  FutureOr<Payment?> build() {
-    return null;
-  }
+  Payment? build() => null;
 
-  Future<void> initiatePayment(String jobId, String phoneNumber, double amount) async {
+  Future<void> initiatePayment(
+      String jobId, String phoneNumber, double amount) async {
     state = const AsyncLoading();
-    state = await AsyncValue.guard(() async {
-      return await ref.read(paymentRemoteDsProvider).initiatePayment(jobId, phoneNumber, amount);
-    });
+    state = await AsyncValue.guard(
+      () => ref
+          .read(paymentRemoteDsProvider)
+          .initiatePayment(jobId, phoneNumber, amount),
+    );
   }
 
   Future<void> checkPaymentStatus(String jobId) async {
-    state = await AsyncValue.guard(() async {
-      return await ref.read(paymentRemoteDsProvider).getPaymentByJobId(jobId);
-    });
+    state = await AsyncValue.guard(
+      () => ref.read(paymentRemoteDsProvider).getPaymentByJobId(jobId),
+    );
   }
 }
+
+final paymentControllerProvider =
+    AsyncNotifierProvider<PaymentController, Payment?>(
+        () => PaymentController());

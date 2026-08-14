@@ -1,23 +1,28 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../models/job.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../jobs/domain/models/job.dart';
 import '../../data/datasources/job_remote_ds.dart';
 
-part 'job_controller.g.dart';
-
-@riverpod
-class JobController extends _$JobController {
+class JobController extends AsyncNotifier<List<Job>> {
   @override
-  FutureOr<List<Job>> build() async {
+  Future<List<Job>> build() async {
     return fetchMyJobs();
   }
 
   Future<List<Job>> fetchMyJobs() async {
-    return await ref.read(jobRemoteDsProvider).getMyJobs();
+    return ref.read(jobRemoteDsProvider).getMyJobs();
   }
-  
+
   Future<Job> createJob(Map<String, dynamic> data) async {
     final newJob = await ref.read(jobRemoteDsProvider).createJob(data);
     ref.invalidateSelf();
     return newJob;
   }
+
+  Future<void> updateJobStatus(String jobId, String action) async {
+    await ref.read(jobRemoteDsProvider).updateJobStatus(jobId, action);
+    ref.invalidateSelf();
+  }
 }
+
+final jobControllerProvider =
+    AsyncNotifierProvider<JobController, List<Job>>(() => JobController());

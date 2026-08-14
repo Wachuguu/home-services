@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/network/dio_client.dart';
 import '../../../../core/constants/api_endpoints.dart';
-import '../models/user.dart';
+import '../../domain/models/user.dart';
 
 final authRemoteDsProvider = Provider<AuthRemoteDs>((ref) {
   return AuthRemoteDs(ref.watch(dioClientProvider));

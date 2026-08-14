@@ -1,14 +1,11 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../models/user.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../domain/models/user.dart';
 import '../../data/datasources/auth_remote_ds.dart';
 import '../../../../core/storage/secure_storage_service.dart';
 
-part 'auth_controller.g.dart';
-
-@riverpod
-class AuthController extends _$AuthController {
+class AuthController extends AsyncNotifier<User?> {
   @override
-  FutureOr<User?> build() async {
+  Future<User?> build() async {
     return await checkAuthStatus();
   }
 
@@ -18,9 +15,8 @@ class AuthController extends _$AuthController {
     if (token == null) return null;
 
     try {
-      final user = await ref.read(authRemoteDsProvider).getCurrentUser();
-      return user;
-    } catch (e) {
+      return await ref.read(authRemoteDsProvider).getCurrentUser();
+    } catch (_) {
       await storage.deleteToken();
       return null;
     }
@@ -30,11 +26,9 @@ class AuthController extends _$AuthController {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final response = await ref.read(authRemoteDsProvider).login(email, password);
-      final token = response['token'];
-      if (token != null) {
-        await ref.read(secureStorageProvider).saveToken(token);
-      }
-      return await ref.read(authRemoteDsProvider).getCurrentUser();
+      final token = response['token'] as String?;
+      if (token != null) await ref.read(secureStorageProvider).saveToken(token);
+      return ref.read(authRemoteDsProvider).getCurrentUser();
     });
   }
 
@@ -54,11 +48,9 @@ class AuthController extends _$AuthController {
         phoneNumber: phoneNumber,
         role: role,
       );
-      final token = response['token'];
-      if (token != null) {
-        await ref.read(secureStorageProvider).saveToken(token);
-      }
-      return await ref.read(authRemoteDsProvider).getCurrentUser();
+      final token = response['token'] as String?;
+      if (token != null) await ref.read(secureStorageProvider).saveToken(token);
+      return ref.read(authRemoteDsProvider).getCurrentUser();
     });
   }
 
@@ -67,3 +59,6 @@ class AuthController extends _$AuthController {
     state = const AsyncData(null);
   }
 }
+
+final authControllerProvider =
+    AsyncNotifierProvider<AuthController, User?>(() => AuthController());
