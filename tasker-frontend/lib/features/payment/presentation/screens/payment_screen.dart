@@ -5,7 +5,7 @@ import '../../../../shared/widgets/app_scaffold.dart';
 import '../../../../shared/widgets/gradient_app_bar.dart';
 import '../../../auth/presentation/widgets/auth_text_field.dart';
 import '../../../auth/presentation/widgets/gradient_button.dart';
-import 'widgets/mpesa_prompt_dialog.dart';
+import '../widgets/mpesa_prompt_dialog.dart';
 
 class PaymentScreen extends ConsumerStatefulWidget {
   final String jobId;

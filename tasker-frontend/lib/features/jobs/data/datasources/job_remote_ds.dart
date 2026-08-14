@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/network/dio_client.dart';
 import '../../../../core/constants/api_endpoints.dart';
-import '../models/job.dart';
+import '../../domain/models/job.dart';
 import '../../../auth/domain/models/user.dart';
 
 final jobRemoteDsProvider = Provider<JobRemoteDs>((ref) {
@@ -47,6 +47,19 @@ class JobRemoteDs {
   Future<Job> cancelJob(String jobId) async {
     final response = await _dio.put(ApiEndpoints.cancelJob(jobId));
     return Job.fromJson(response.data);
+  }
+
+  Future<Job> updateJobStatus(String jobId, String action) async {
+    switch (action) {
+      case 'start':
+        return startJob(jobId);
+      case 'complete':
+        return completeJob(jobId);
+      case 'cancel':
+        return cancelJob(jobId);
+      default:
+        throw ArgumentError('Unknown job action: $action');
+    }
   }
 
   Future<List<User>> getNearbyProviders(String categoryId, double lat, double lng, double radiusKm) async {
