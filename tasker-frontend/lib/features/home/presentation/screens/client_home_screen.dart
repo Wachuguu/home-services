@@ -5,6 +5,7 @@ import '../../../../app/theme/app_colors.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../../../categories/presentation/controllers/category_controller.dart';
 import '../widgets/category_chip.dart';
+import '../../../categories/presentation/widgets/category_card.dart';
 
 class ClientHomeScreen extends ConsumerStatefulWidget {
   const ClientHomeScreen({super.key});
@@ -29,6 +30,7 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
     ];
 
     return Scaffold(
+      backgroundColor: AppColors.backgroundPrimary,
       body: tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -121,17 +123,7 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                 ),
                 itemCount: categories.length.clamp(0, 4),
                 itemBuilder: (context, index) {
-                  // Simplified card for home view
-                  return GestureDetector(
-                    onTap: () => context.push('/jobs/create/${categories[index].id}'),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.backgroundSurface,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Center(child: Text(categories[index].name)),
-                    ),
-                  );
+                  return CategoryCard(category: categories[index]);
                 },
               ),
               loading: () => const SizedBox(),

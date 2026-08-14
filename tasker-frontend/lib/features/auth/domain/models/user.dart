@@ -1,3 +1,29 @@
+class Skill {
+  final int categoryId;
+  final String categoryName;
+  final int? experienceYears;
+  final double? hourlyRate;
+  final bool verified;
+
+  Skill({
+    required this.categoryId,
+    required this.categoryName,
+    this.experienceYears,
+    this.hourlyRate,
+    this.verified = false,
+  });
+
+  factory Skill.fromJson(Map<String, dynamic> json) {
+    return Skill(
+      categoryId: json['categoryId'] ?? 0,
+      categoryName: json['categoryName'] ?? '',
+      experienceYears: json['experienceYears'],
+      hourlyRate: json['hourlyRate']?.toDouble(),
+      verified: json['verified'] ?? false,
+    );
+  }
+}
+
 class User {
   final String id;
   final String email;
@@ -10,7 +36,7 @@ class User {
   final bool? isAvailable;
   final double? rating;
   final int? totalReviews;
-  final List<String>? skills;
+  final List<Skill>? skills;
 
   User({
     required this.id,
@@ -40,7 +66,9 @@ class User {
       isAvailable: json['isAvailable'],
       rating: json['rating']?.toDouble(),
       totalReviews: json['totalReviews'],
-      skills: (json['skills'] as List?)?.map((e) => e as String).toList(),
+      skills: (json['skills'] as List?)
+          ?.map((e) => Skill.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
 
@@ -57,7 +85,6 @@ class User {
       'isAvailable': isAvailable,
       'rating': rating,
       'totalReviews': totalReviews,
-      'skills': skills,
     };
   }
 }

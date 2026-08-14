@@ -29,6 +29,7 @@ class _ProviderHomeScreenState extends ConsumerState<ProviderHomeScreen> {
     ];
 
     return Scaffold(
+      backgroundColor: AppColors.backgroundPrimary,
       body: tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
