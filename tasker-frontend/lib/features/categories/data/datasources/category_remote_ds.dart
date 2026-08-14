@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/network/dio_client.dart';
 import '../../../../core/constants/api_endpoints.dart';
-import '../models/service_category.dart';
+import '../../domain/models/service_category.dart';
 
 final categoryRemoteDsProvider = Provider<CategoryRemoteDs>((ref) {
   return CategoryRemoteDs(ref.watch(dioClientProvider));

@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../shared/widgets/app_scaffold.dart';
 import '../../../../shared/widgets/gradient_app_bar.dart';
-import '../../../../shared/widgets/loading_overlay.dart';
 import '../widgets/job_status_badge.dart';
 import '../../data/datasources/job_remote_ds.dart';
 import '../../domain/models/job.dart';
@@ -28,7 +27,7 @@ class JobDetailScreen extends ConsumerWidget {
     return jobAsync.when(
       loading: () => const AppScaffold(
         appBar: GradientAppBar(title: 'Job Details'),
-        body: LoadingOverlay(),
+        body: Center(child: CircularProgressIndicator()),
       ),
       error: (e, _) => AppScaffold(
         appBar: const GradientAppBar(title: 'Job Details'),

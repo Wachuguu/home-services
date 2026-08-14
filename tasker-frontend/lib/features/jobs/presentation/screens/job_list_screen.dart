@@ -34,8 +34,9 @@ class JobListScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(16),
                   itemCount: jobs.length,
                   separatorBuilder: (_, __) => const SizedBox(height: 12),
-                  itemBuilder: (context, i) => GestureDetector(
+                  itemBuilder: (context, i) => InkWell(
                     onTap: () => context.push('/jobs/${jobs[i].id}'),
+                    borderRadius: BorderRadius.circular(16),
                     child: JobCard(job: jobs[i]),
                   ),
                 ),

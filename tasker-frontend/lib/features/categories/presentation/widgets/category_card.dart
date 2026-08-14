@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../app/theme/app_colors.dart';
-import '../models/service_category.dart';
+import '../../domain/models/service_category.dart';
 
 class CategoryCard extends StatelessWidget {
   final ServiceCategory category;

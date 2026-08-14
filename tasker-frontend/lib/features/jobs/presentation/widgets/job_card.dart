@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../../../app/theme/app_colors.dart';
-import '../models/job.dart';
+import '../../domain/models/job.dart';
 import 'job_status_badge.dart';
 
 class JobCard extends StatelessWidget {
   final Job job;
-  final VoidCallback onTap;
 
-  const JobCard({super.key, required this.job, required this.onTap});
+  const JobCard({super.key, required this.job});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
+    return Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: AppColors.backgroundSurface,
@@ -33,10 +30,10 @@ class JobCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(job.categoryName, style: const TextStyle(color: AppColors.textMuted)),
             const SizedBox(height: 12),
-            Text('Cost: KES ${job.estimatedCost.toStringAsFixed(0)}', style: const TextStyle(color: AppColors.success)),
+            Text('KES ${job.estimatedCost.toStringAsFixed(0)}',
+                style: const TextStyle(color: AppColors.success, fontWeight: FontWeight.w600)),
           ],
         ),
-      ),
-    );
+      );
   }
 }

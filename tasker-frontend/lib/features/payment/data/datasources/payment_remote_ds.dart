@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/network/dio_client.dart';
 import '../../../../core/constants/api_endpoints.dart';
-import '../models/payment.dart';
+import '../../domain/models/payment.dart';
 
 final paymentRemoteDsProvider = Provider<PaymentRemoteDs>((ref) {
   return PaymentRemoteDs(ref.watch(dioClientProvider));
