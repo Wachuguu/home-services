@@ -26,6 +26,7 @@ dependencies:
   firebase_core: ^3.8.1
   firebase_messaging: ^15.1.6
   cupertino_icons: ^1.0.8
+  intl_phone_field: ^3.2.0
 
 dev_dependencies:
   flutter_test:
@@ -36,9 +37,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  # assets:
-  #   - assets/icons/
-  #   - assets/images/
+  assets:
+    - assets/images/
   # fonts:
   #   - family: Inter
   #     fonts:

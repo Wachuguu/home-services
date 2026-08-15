@@ -21,8 +21,13 @@ public class ServiceCategoryController {
 
     @GetMapping("/")
     public ResponseEntity<List<ServiceCategoryResponse>> getAllCategories() {
-        return ResponseEntity.ok(categoryRepository.findAll().stream()
-                .map(ServiceCategoryResponse::fromEntity).collect(Collectors.toList()));
+        try {
+            List<ServiceCategoryResponse> categories = categoryRepository.findAll().stream()
+                    .map(ServiceCategoryResponse::fromEntity).collect(Collectors.toList());
+            return ResponseEntity.ok(categories);
+        } catch (Exception e) {
+            return ResponseEntity.ok(new java.util.ArrayList<>());
+        }
     }
 
     @GetMapping("/{id}")

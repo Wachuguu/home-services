@@ -8,6 +8,9 @@ import '../widgets/category_chip.dart';
 import '../../../categories/presentation/widgets/category_card.dart';
 import '../../../jobs/presentation/screens/job_list_screen.dart';
 import '../../../profile/presentation/screens/profile_screen.dart';
+import '../../../../shared/widgets/shimmer_loading_widget.dart';
+
+import '../../../../shared/widgets/dynamic_background.dart';
 
 class ClientHomeScreen extends ConsumerStatefulWidget {
   const ClientHomeScreen({super.key});
@@ -32,8 +35,11 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
     ];
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundPrimary,
-      body: tabs[_currentIndex],
+      backgroundColor: Colors.transparent,
+      body: DynamicBackground(
+        isHome: true,
+        child: tabs[_currentIndex],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (i) {
@@ -95,7 +101,15 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                   ),
                 ),
               ),
-              loading: () => const SizedBox(height: 50, child: Center(child: CircularProgressIndicator())),
+              loading: () => SizedBox(
+                height: 50,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  separatorBuilder: (_, __) => const SizedBox(width: 12),
+                  itemBuilder: (context, index) => const ShimmerLoadingWidget(width: 100, height: 50, borderRadius: 25),
+                ),
+              ),
               error: (_, __) => const SizedBox(),
             ),
             const SizedBox(height: 32),
@@ -126,7 +140,20 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                   return CategoryCard(category: categories[index]);
                 },
               ),
-              loading: () => const SizedBox(),
+              loading: () => GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.85,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                ),
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  return const ShimmerLoadingWidget(width: double.infinity, height: double.infinity, borderRadius: 16);
+                },
+              ),
               error: (_, __) => const SizedBox(),
             ),
           ],

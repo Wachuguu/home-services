@@ -18,6 +18,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  String? _emailError;
+  String? _passwordError;
+  String? _generalError;
+
   void _login() {
     if (_formKey.currentState!.validate()) {
       ref.read(authControllerProvider.notifier).login(
@@ -34,12 +38,29 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     ref.listen(authControllerProvider, (previous, next) {
       if (next.hasError) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(next.error.toString()),
-            backgroundColor: AppColors.error,
-          ),
-        );
+        final errorMsg = next.error.toString().toLowerCase();
+        setState(() {
+          _emailError = null;
+          _passwordError = null;
+          _generalError = null;
+
+          if (errorMsg.contains('email') || errorMsg.contains('user')) {
+            _emailError = next.error.toString();
+          } else if (errorMsg.contains('password') || errorMsg.contains('credentials')) {
+            _passwordError = next.error.toString();
+          } else {
+            _generalError = next.error.toString();
+          }
+        });
+
+        if (_generalError != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(_generalError!),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
       } else if (next.value != null && previous?.value == null) {
         final role = next.value!.role;
         context.go(role == 'CLIENT' ? '/client-home' : '/provider-home');
@@ -78,6 +99,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   prefixIcon: Icons.email_outlined,
                   keyboardType: TextInputType.emailAddress,
                   validator: Validators.validateEmail,
+                  errorText: _emailError,
                 ),
                 const SizedBox(height: 16),
                 AuthTextField(
@@ -87,6 +109,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   prefixIcon: Icons.lock_outline,
                   obscureText: true,
                   validator: Validators.validatePassword,
+                  errorText: _passwordError,
                 ),
                 const SizedBox(height: 32),
                 ElevatedButton(

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/models/user.dart';
 import '../../data/datasources/auth_remote_ds.dart';
@@ -24,12 +25,28 @@ class AuthController extends AsyncNotifier<User?> {
 
   Future<void> login(String email, String password) async {
     state = const AsyncLoading();
-    state = await AsyncValue.guard(() async {
+    try {
       final response = await ref.read(authRemoteDsProvider).login(email, password);
       final token = response['token'] as String?;
       if (token != null) await ref.read(secureStorageProvider).saveToken(token);
-      return ref.read(authRemoteDsProvider).getCurrentUser();
-    });
+      final user = await ref.read(authRemoteDsProvider).getCurrentUser();
+      state = AsyncData(user);
+    } on DioException catch (e) {
+      String errorMessage = "Login failed. Please check your credentials.";
+      if (e.response?.data != null) {
+        if (e.response?.data is Map) {
+          final data = e.response?.data as Map;
+          if (data.containsKey('message')) {
+            errorMessage = data['message'].toString();
+          }
+        } else {
+          errorMessage = e.response?.data.toString() ?? errorMessage;
+        }
+      }
+      state = AsyncError(errorMessage, e.stackTrace ?? StackTrace.current);
+    } catch (e, st) {
+      state = AsyncError("An unexpected error occurred", st);
+    }
   }
 
   Future<void> register({
@@ -40,7 +57,7 @@ class AuthController extends AsyncNotifier<User?> {
     required String role,
   }) async {
     state = const AsyncLoading();
-    state = await AsyncValue.guard(() async {
+    try {
       final response = await ref.read(authRemoteDsProvider).register(
         email: email,
         password: password,
@@ -50,8 +67,24 @@ class AuthController extends AsyncNotifier<User?> {
       );
       final token = response['token'] as String?;
       if (token != null) await ref.read(secureStorageProvider).saveToken(token);
-      return ref.read(authRemoteDsProvider).getCurrentUser();
-    });
+      final user = await ref.read(authRemoteDsProvider).getCurrentUser();
+      state = AsyncData(user);
+    } on DioException catch (e) {
+      String errorMessage = "Registration failed. Please check your details.";
+      if (e.response?.data != null) {
+        if (e.response?.data is Map) {
+          final data = e.response?.data as Map;
+          if (data.containsKey('message')) {
+            errorMessage = data['message'].toString();
+          }
+        } else {
+          errorMessage = e.response?.data.toString() ?? errorMessage;
+        }
+      }
+      state = AsyncError(errorMessage, e.stackTrace ?? StackTrace.current);
+    } catch (e, st) {
+      state = AsyncError("An unexpected error occurred", st);
+    }
   }
 
   Future<void> logout() async {

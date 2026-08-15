@@ -6,6 +6,7 @@ import '../../../../core/utils/validators.dart';
 import '../controllers/auth_controller.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/gradient_button.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -24,6 +25,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   
   String _selectedRole = 'CLIENT';
   bool _acceptTerms = false;
+  String _fullPhoneNumber = '';
+
+  String? _emailError;
+  String? _phoneError;
+  String? _generalError;
 
   void _register() {
     if (_formKey.currentState!.validate() && _acceptTerms) {
@@ -37,7 +43,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       ref.read(authControllerProvider.notifier).register(
         fullName: _nameController.text.trim(),
         email: _emailController.text.trim(),
-        phoneNumber: _phoneController.text.trim(),
+        phoneNumber: _fullPhoneNumber,
         password: _passwordController.text,
         role: _selectedRole,
       );
@@ -55,12 +61,29 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
     ref.listen(authControllerProvider, (previous, next) {
       if (next.hasError) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(next.error.toString()),
-            backgroundColor: AppColors.error,
-          ),
-        );
+        final errorMsg = next.error.toString().toLowerCase();
+        setState(() {
+          _emailError = null;
+          _phoneError = null;
+          _generalError = null;
+
+          if (errorMsg.contains('email')) {
+            _emailError = next.error.toString();
+          } else if (errorMsg.contains('number') || errorMsg.contains('phone')) {
+            _phoneError = next.error.toString();
+          } else {
+            _generalError = next.error.toString();
+          }
+        });
+        
+        if (_generalError != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(_generalError!),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
       } else if (next.value != null && previous?.value == null) {
         context.go(next.value!.role == 'CLIENT' ? '/client-home' : '/provider-home');
       }
@@ -114,15 +137,18 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 prefixIcon: Icons.email_outlined,
                 keyboardType: TextInputType.emailAddress,
                 validator: Validators.validateEmail,
+                errorText: _emailError,
               ),
               const SizedBox(height: 16),
-              AuthTextField(
-                controller: _phoneController,
-                label: 'Phone Number',
-                hint: '254700000000',
-                prefixIcon: Icons.phone_outlined,
-                keyboardType: TextInputType.phone,
-                validator: Validators.validatePhone,
+              IntlPhoneField(
+                decoration: InputDecoration(
+                  labelText: 'Phone Number',
+                  errorText: _phoneError,
+                ),
+                initialCountryCode: 'US',
+                onChanged: (phone) {
+                  _fullPhoneNumber = phone.completeNumber;
+                },
               ),
               const SizedBox(height: 16),
               AuthTextField(

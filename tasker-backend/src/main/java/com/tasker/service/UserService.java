@@ -27,6 +27,7 @@ public class UserService {
         this.providerSkillRepository = providerSkillRepository;
     }
 
+    @Transactional
     public UserResponse getUserById(UUID id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
@@ -56,6 +57,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     public UserResponse getProviderProfile(UUID providerId) {
         User user = userRepository.findById(providerId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", providerId));

@@ -6,6 +6,7 @@ import '../controllers/category_controller.dart';
 import '../widgets/category_card.dart';
 import '../../../../shared/widgets/app_scaffold.dart';
 import '../../../../shared/widgets/gradient_app_bar.dart';
+import '../../../../shared/widgets/shimmer_loading_widget.dart';
 
 class CategoryGridScreen extends ConsumerWidget {
   const CategoryGridScreen({super.key});
@@ -51,7 +52,19 @@ class CategoryGridScreen extends ConsumerWidget {
                       .slideY(begin: 0.2, end: 0, delay: (index * 50).ms);
                 },
               ),
-              loading: () => const Center(child: CircularProgressIndicator()),
+              loading: () => GridView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.85,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                ),
+                itemCount: 6,
+                itemBuilder: (context, index) {
+                  return const ShimmerLoadingWidget(width: double.infinity, height: double.infinity, borderRadius: 16);
+                },
+              ),
               error: (err, stack) => Center(child: Text('Error: $err', style: const TextStyle(color: AppColors.error))),
             ),
           ),

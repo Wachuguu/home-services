@@ -54,6 +54,7 @@ public class AuthService {
         return new AuthResponse(token, "Bearer", user.getId(), user.getRole(), user.getFullName());
     }
 
+    @Transactional
     public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "email", request.email()));
