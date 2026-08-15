@@ -19,7 +19,7 @@ public class ServiceCategoryController {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<ServiceCategoryResponse>> getAllCategories() {
         try {
             List<ServiceCategoryResponse> categories = categoryRepository.findAll().stream()

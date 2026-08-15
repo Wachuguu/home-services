@@ -21,7 +21,9 @@ class ServiceCategory {
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       iconName: json['iconName'] ?? '',
-      basePrice: (json['basePrice'] ?? 0).toDouble(),
+      basePrice: json['basePrice'] != null
+          ? (json['basePrice'] is num ? (json['basePrice'] as num).toDouble() : double.tryParse(json['basePrice'].toString()) ?? 0.0)
+          : 0.0,
     );
   }
 

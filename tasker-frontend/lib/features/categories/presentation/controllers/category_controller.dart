@@ -13,8 +13,10 @@ class CategoryController extends AsyncNotifier<List<ServiceCategory>> {
     try {
       return await ref.read(categoryRemoteDsProvider).getCategories();
     } on DioException catch (e) {
+      print('Category Fetch Error: $e');
       throw Exception("Failed to load categories. Please try again.");
     } catch (e) {
+      print('Category Fetch Error: $e');
       throw Exception("An unexpected error occurred.");
     }
   }

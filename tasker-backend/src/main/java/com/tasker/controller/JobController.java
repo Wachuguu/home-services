@@ -25,7 +25,7 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<JobResponse> createJob(@AuthenticationPrincipal UserPrincipal principal,
                                                  @RequestBody @Valid CreateJobRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(jobService.createJob(principal.getId(), request));
