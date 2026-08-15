@@ -11,7 +11,7 @@ class JobStatusBadge extends StatelessWidget {
     switch (status) {
       case 'REQUESTED': color = AppColors.warning; break;
       case 'MATCHED': color = AppColors.primaryBlueLight; break;
-      case 'IN_PROGRESS': color = AppColors.accentPurple; break;
+      case 'IN_PROGRESS': color = AppColors.primaryBlueLight; break;
       case 'COMPLETED': color = AppColors.success; break;
       case 'CANCELLED': color = AppColors.error; break;
       default: color = AppColors.textMuted;

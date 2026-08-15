@@ -24,7 +24,7 @@ class AppTheme {
         bodyMedium: TextStyle(fontSize: 14, color: AppColors.textSecondary),
         labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.primaryBlue),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.backgroundSurface,
         elevation: 4,
         shadowColor: Colors.black.withOpacity(0.3),
