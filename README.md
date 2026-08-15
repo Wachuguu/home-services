@@ -1,4 +1,4 @@
-# 🔧 Tasker — Local Services Marketplace
+Home services— Local Services Marketplace
 
 A full-stack two-sided marketplace connecting **Clients** with skilled **Providers** for 13 home service categories, with geolocation matching, escrow payments via M-Pesa, and a premium dark-mode mobile UI.
 
