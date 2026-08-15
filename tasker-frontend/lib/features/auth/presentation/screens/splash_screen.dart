@@ -43,7 +43,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             ShaderMask(
               shaderCallback: (bounds) => AppColors.heroGradient.createShader(bounds),
               child: const Text(
-                'TASKER',
+                'HOME SERVICES',
                 style: TextStyle(
                   fontSize: 48,
                   fontWeight: FontWeight.bold,

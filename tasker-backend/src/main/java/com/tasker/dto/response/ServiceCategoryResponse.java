@@ -1,6 +1,6 @@
-package com.tasker.dto.response;
+package com.homeServices.dto.response;
 
-import com.tasker.model.ServiceCategory;
+import com.homeServices.model.ServiceCategory;
 
 import java.math.BigDecimal;
 

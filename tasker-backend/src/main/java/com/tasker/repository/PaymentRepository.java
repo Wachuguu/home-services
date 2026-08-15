@@ -1,6 +1,6 @@
-package com.tasker.repository;
+package com.homeServices.repository;
 
-import com.tasker.model.Payment;
+import com.homeServices.model.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

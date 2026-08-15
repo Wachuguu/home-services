@@ -1,11 +1,11 @@
-package com.tasker.service;
+package com.homeServices.service;
 
-import com.tasker.model.ProviderSkill;
-import com.tasker.repository.JobRepository;
-import com.tasker.repository.PaymentRepository;
-import com.tasker.repository.ProviderSkillRepository;
-import com.tasker.repository.UserRepository;
-import com.tasker.exception.ResourceNotFoundException;
+import com.homeServices.model.ProviderSkill;
+import com.homeServices.repository.JobRepository;
+import com.homeServices.repository.PaymentRepository;
+import com.homeServices.repository.ProviderSkillRepository;
+import com.homeServices.repository.UserRepository;
+import com.homeServices.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

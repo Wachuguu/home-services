@@ -1,6 +1,6 @@
-package com.tasker.dto.request;
+package com.homeServices.dto.request;
 
-import com.tasker.model.UserRole;
+import com.homeServices.model.UserRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

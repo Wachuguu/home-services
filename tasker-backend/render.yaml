@@ -1,20 +1,20 @@
 services:
   - type: web
-    name: tasker-api
+    name: homeServices-api
     runtime: docker
     plan: starter
     envVars:
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
-          name: tasker-db
+          name: homeServices-db
           property: connectionString
       - key: SPRING_DATASOURCE_USERNAME
         fromDatabase:
-          name: tasker-db
+          name: homeServices-db
           property: user
       - key: SPRING_DATASOURCE_PASSWORD
         fromDatabase:
-          name: tasker-db
+          name: homeServices-db
           property: password
       - key: JWT_SECRET
         sync: false
@@ -32,7 +32,7 @@ services:
         sync: false
 
 databases:
-  - name: tasker-db
+  - name: homeServices-db
     plan: starter
     postgresMajorVersion: "16"
     ipAllowList: [] # Required for PostGIS extension support in Render in some configurations

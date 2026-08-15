@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:label="Tasker"
+        android:label="Home Services"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

@@ -1,4 +1,4 @@
-package com.tasker.config;
+package com.homeServices.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,6 +1,6 @@
-package com.tasker.service;
+package com.homeServices.service;
 
-import com.tasker.config.MpesaConfig;
+import com.homeServices.config.MpesaConfig;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpHeaders;

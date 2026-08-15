@@ -1,7 +1,7 @@
-package com.tasker.security;
+package com.homeServices.security;
 
-import com.tasker.model.User;
-import com.tasker.repository.UserRepository;
+import com.homeServices.model.User;
+import com.homeServices.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

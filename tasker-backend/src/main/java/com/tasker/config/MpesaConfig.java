@@ -1,4 +1,4 @@
-package com.tasker.config;
+package com.homeServices.config;
 
 import lombok.Getter;
 import lombok.Setter;

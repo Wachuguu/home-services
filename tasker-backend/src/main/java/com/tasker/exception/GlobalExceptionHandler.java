@@ -1,4 +1,4 @@
-package com.tasker.exception;
+package com.homeServices.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

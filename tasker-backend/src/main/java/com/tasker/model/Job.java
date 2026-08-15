@@ -1,4 +1,4 @@
-package com.tasker.model;
+package com.homeServices.model;
 
 import jakarta.persistence.*;
 import lombok.*;

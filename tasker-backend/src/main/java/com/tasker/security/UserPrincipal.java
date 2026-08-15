@@ -1,7 +1,7 @@
-package com.tasker.security;
+package com.homeServices.security;
 
-import com.tasker.model.User;
-import com.tasker.model.UserRole;
+import com.homeServices.model.User;
+import com.homeServices.model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;

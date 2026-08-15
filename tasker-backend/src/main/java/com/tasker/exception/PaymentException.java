@@ -1,4 +1,4 @@
-package com.tasker.exception;
+package com.homeServices.exception;
 
 public class PaymentException extends RuntimeException {
     public PaymentException(String message) {

@@ -1,10 +1,10 @@
-package com.tasker.controller;
+package com.homeServices.controller;
 
-import com.tasker.dto.request.CreateJobRequest;
-import com.tasker.dto.response.JobResponse;
-import com.tasker.model.UserRole;
-import com.tasker.security.UserPrincipal;
-import com.tasker.service.JobService;
+import com.homeServices.dto.request.CreateJobRequest;
+import com.homeServices.dto.response.JobResponse;
+import com.homeServices.model.UserRole;
+import com.homeServices.security.UserPrincipal;
+import com.homeServices.service.JobService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

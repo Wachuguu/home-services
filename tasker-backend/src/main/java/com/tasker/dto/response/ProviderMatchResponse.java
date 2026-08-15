@@ -1,4 +1,4 @@
-package com.tasker.dto.response;
+package com.homeServices.dto.response;
 
 import java.math.BigDecimal;
 import java.util.UUID;

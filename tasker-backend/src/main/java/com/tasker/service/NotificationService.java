@@ -1,6 +1,6 @@
-package com.tasker.service;
+package com.homeServices.service;
 
-import com.tasker.repository.UserRepository;
+import com.homeServices.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

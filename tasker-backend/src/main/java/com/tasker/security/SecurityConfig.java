@@ -1,4 +1,4 @@
-package com.tasker.security;
+package com.homeServices.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

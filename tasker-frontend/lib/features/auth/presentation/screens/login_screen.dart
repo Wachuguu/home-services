@@ -5,7 +5,6 @@ import '../../../../app/theme/app_colors.dart';
 import '../../../../core/utils/validators.dart';
 import '../controllers/auth_controller.dart';
 import '../widgets/auth_text_field.dart';
-import '../widgets/gradient_button.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -48,6 +47,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
@@ -57,21 +57,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 40),
-                ShaderMask(
-                  shaderCallback: (bounds) => AppColors.heroGradient.createShader(bounds),
-                  child: const Text(
-                    'TASKER',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                const Text(
+                  'HOME SERVICES',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primaryBlue,
                   ),
                 ),
                 const SizedBox(height: 8),
                 const Text(
                   'Find skilled professionals near you',
-                  style: TextStyle(color: AppColors.textSecondary, fontSize: 16),
+                  style: TextStyle(color: Colors.grey, fontSize: 16),
                 ),
                 const SizedBox(height: 48),
                 AuthTextField(
@@ -92,17 +89,33 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   validator: Validators.validatePassword,
                 ),
                 const SizedBox(height: 32),
-                GradientButton(
-                  text: 'Login',
-                  isLoading: isLoading,
-                  onPressed: _login,
+                ElevatedButton(
+                  onPressed: isLoading ? null : _login,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primaryBlue,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: isLoading
+                      ? const SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                        )
+                      : const Text(
+                          'Log In',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
                 ),
                 const SizedBox(height: 24),
                 TextButton(
                   onPressed: () => context.push('/register'),
                   child: const Text(
                     "Don't have an account? Register",
-                    style: TextStyle(color: AppColors.primaryBlueLight),
+                    style: TextStyle(color: AppColors.primaryBlue),
                   ),
                 ),
               ],

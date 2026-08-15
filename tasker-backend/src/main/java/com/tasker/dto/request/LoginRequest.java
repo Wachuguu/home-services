@@ -1,4 +1,4 @@
-package com.tasker.dto.request;
+package com.homeServices.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 

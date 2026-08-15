@@ -1,6 +1,6 @@
-package com.tasker.repository;
+package com.homeServices.repository;
 
-import com.tasker.model.User;
+import com.homeServices.model.User;
 import org.locationtech.jts.geom.Point;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

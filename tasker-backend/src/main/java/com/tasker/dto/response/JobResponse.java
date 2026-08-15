@@ -1,6 +1,6 @@
-package com.tasker.dto.response;
+package com.homeServices.dto.response;
 
-import com.tasker.model.Job;
+import com.homeServices.model.Job;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

@@ -12,5 +12,5 @@ void main() async {
     debugPrint('Firebase initialization failed: $e');
   }
 
-  runApp(const ProviderScope(child: TaskerApp()));
+  runApp(const ProviderScope(child: HomeServicesApp()));
 }

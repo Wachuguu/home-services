@@ -1,7 +1,7 @@
-package com.tasker.repository;
+package com.homeServices.repository;
 
-import com.tasker.model.Job;
-import com.tasker.model.JobStatus;
+import com.homeServices.model.Job;
+import com.homeServices.model.JobStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
