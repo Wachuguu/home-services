@@ -28,11 +28,14 @@ public class AuthService {
 
     @Transactional
     public AuthResponse register(RegisterRequest request) {
+        if (!request.email().contains("@")) {
+            throw new IllegalArgumentException("missing required email syntax");
+        }
         if (userRepository.existsByEmail(request.email())) {
-            throw new DuplicateResourceException("Email already in use");
+            throw new DuplicateResourceException("email already exists");
         }
         if (userRepository.existsByPhoneNumber(request.phoneNumber())) {
-            throw new DuplicateResourceException("Phone number already in use");
+            throw new DuplicateResourceException("there is a user that has the same registered number");
         }
 
         User user = User.builder()

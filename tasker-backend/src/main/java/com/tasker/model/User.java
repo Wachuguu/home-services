@@ -7,6 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -58,5 +59,6 @@ public class User {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "provider")
+    @JsonIgnore
     private List<ProviderSkill> skills;
 }
