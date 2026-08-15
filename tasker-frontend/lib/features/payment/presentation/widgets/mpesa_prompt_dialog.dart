@@ -39,7 +39,7 @@ class MpesaPromptDialog extends StatelessWidget {
           const SizedBox(height: 16),
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel', style: TextStyle(color: AppColors.error)),
+            child: const Text('Done', style: TextStyle(color: AppColors.primaryBlueLight)),
           ),
         ],
       ),

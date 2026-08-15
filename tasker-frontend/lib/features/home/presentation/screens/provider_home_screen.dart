@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../widgets/stats_card.dart';
+import '../../../jobs/presentation/screens/job_list_screen.dart';
+import '../../../profile/presentation/screens/profile_screen.dart';
 
 class ProviderHomeScreen extends ConsumerStatefulWidget {
   const ProviderHomeScreen({super.key});
@@ -23,9 +25,9 @@ class _ProviderHomeScreenState extends ConsumerState<ProviderHomeScreen> {
 
     final tabs = [
       _buildDashboardTab(user?.fullName ?? 'Provider'),
-      const Center(child: Text('Jobs Tab (Coming Soon)')),
+      const JobListScreen(),
       const Center(child: Text('Earnings Tab (Coming Soon)')),
-      const Center(child: Text('Profile Tab (Coming Soon)')),
+      const ProfileScreen(),
     ];
 
     return Scaffold(
@@ -35,9 +37,7 @@ class _ProviderHomeScreenState extends ConsumerState<ProviderHomeScreen> {
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
         onTap: (i) {
-          if (i == 1) context.push('/jobs');
-          else if (i == 3) context.push('/profile');
-          else setState(() => _currentIndex = i);
+          setState(() => _currentIndex = i);
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Dashboard'),

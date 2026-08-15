@@ -82,6 +82,15 @@ public class PaymentService {
                 Map<String, Object> callbackMetadata = (Map<String, Object>) stkCallback.get("CallbackMetadata");
                 // Extract receipt number logic here
                 payment.setMpesaReceiptNumber("DUMMY_RECEIPT"); // Placeholder
+                
+                Job job = payment.getJob();
+                job.setStatus(JobStatus.IN_PROGRESS);
+                jobRepository.save(job);
+                
+                notificationService.sendNotification(job.getClient().getId(), 
+                    "Payment Successful", "Your payment for job " + job.getTitle() + " has been held in escrow.", null);
+                notificationService.sendNotification(job.getProvider().getId(), 
+                    "Job Started", "Client has escrowed the payment for " + job.getTitle() + ". You can begin.", null);
             } else {
                 payment.setStatus(PaymentStatus.FAILED);
             }

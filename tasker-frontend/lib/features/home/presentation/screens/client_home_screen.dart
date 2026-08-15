@@ -6,6 +6,8 @@ import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../../../categories/presentation/controllers/category_controller.dart';
 import '../widgets/category_chip.dart';
 import '../../../categories/presentation/widgets/category_card.dart';
+import '../../../jobs/presentation/screens/job_list_screen.dart';
+import '../../../profile/presentation/screens/profile_screen.dart';
 
 class ClientHomeScreen extends ConsumerStatefulWidget {
   const ClientHomeScreen({super.key});
@@ -25,8 +27,8 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
 
     final tabs = [
       _buildHomeTab(user?.fullName ?? 'User', categoriesAsync, context),
-      const Center(child: Text('Jobs Tab (Coming Soon)')),
-      const Center(child: Text('Profile Tab (Coming Soon)')),
+      const JobListScreen(),
+      const ProfileScreen(),
     ];
 
     return Scaffold(
@@ -35,9 +37,7 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (i) {
-          if (i == 1) context.push('/jobs');
-          else if (i == 2) context.push('/profile');
-          else setState(() => _currentIndex = i);
+          setState(() => _currentIndex = i);
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
