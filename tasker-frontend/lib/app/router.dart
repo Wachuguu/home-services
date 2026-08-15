@@ -15,11 +15,10 @@ import '../features/payment/presentation/screens/payment_screen.dart';
 import '../features/profile/presentation/screens/profile_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authControllerProvider);
-  
   return GoRouter(
     initialLocation: '/',
     redirect: (context, state) {
+      final authState = ref.read(authControllerProvider);
       final isAuthRoute = state.matchedLocation == '/login' || state.matchedLocation == '/register';
       final isSplash = state.matchedLocation == '/';
       
