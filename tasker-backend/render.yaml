@@ -1,25 +1,39 @@
 services:
   - type: web
-    name: homeServices-api
+    name: tasker-api
     runtime: docker
     plan: starter
+    rootDir: tasker-backend
+    dockerfilePath: Dockerfile
+    dockerContext: .
+    healthCheckPath: /actuator/health
     envVars:
-      - key: SPRING_DATASOURCE_URL
+      - key: DB_HOST
         fromDatabase:
-          name: homeServices-db
-          property: connectionString
-      - key: SPRING_DATASOURCE_USERNAME
+          name: tasker-db
+          property: host
+      - key: DB_PORT
         fromDatabase:
-          name: homeServices-db
+          name: tasker-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: tasker-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: tasker-db
           property: user
-      - key: SPRING_DATASOURCE_PASSWORD
+      - key: DB_PASSWORD
         fromDatabase:
-          name: homeServices-db
+          name: tasker-db
           property: password
       - key: JWT_SECRET
-        sync: false
+        generateValue: true
       - key: JAVA_OPTS
         value: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+      - key: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+        value: "health"
       - key: MPESA_CONSUMER_KEY
         sync: false
       - key: MPESA_CONSUMER_SECRET
@@ -32,7 +46,7 @@ services:
         sync: false
 
 databases:
-  - name: homeServices-db
+  - name: tasker-db
     plan: starter
     postgresMajorVersion: "16"
-    ipAllowList: [] # Required for PostGIS extension support in Render in some configurations
+    ipAllowList: []

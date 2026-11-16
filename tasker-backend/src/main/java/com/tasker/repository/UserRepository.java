@@ -18,14 +18,37 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     boolean existsByEmail(String email);
     boolean existsByPhoneNumber(String phoneNumber);
 
-    @Query(value = "SELECT u.*, ps.hourly_rate, ps.experience_years, ps.verified, ST_Distance(u.location, :point) as distance " +
+    @Query(value = "SELECT " +
+            "u.id AS provider_id, " +
+            "u.full_name AS full_name, " +
+            "u.phone_number AS phone_number, " +
+            "u.rating AS rating, " +
+            "u.total_reviews AS total_reviews, " +
+            "u.profile_image_url AS profile_image_url, " +
+            "ps.hourly_rate AS hourly_rate, " +
+            "ps.experience_years AS experience_years, " +
+            "ps.verified AS verified, " +
+            "ST_Distance(u.location, ST_SetSRID(ST_MakePoint(:longitude, :latitude), 4326)::geography) AS distance_meters " +
             "FROM users u " +
             "JOIN provider_skills ps ON u.id = ps.provider_id " +
-            "WHERE u.role = 'PROVIDER' AND u.is_available = true " +
+            "WHERE u.role = 'PROVIDER' " +
+            "AND u.is_available = true " +
             "AND ps.category_id = :categoryId " +
-            "AND ST_DWithin(u.location, :point, :radiusMeters) " +
-            "ORDER BY distance ASC", nativeQuery = true)
-    List<User> findNearbyAvailableProvidersByCategory(@Param("categoryId") Integer categoryId, 
-                                                      @Param("point") Point point, 
-                                                      @Param("radiusMeters") double radiusMeters);
+            "AND u.location IS NOT NULL " +
+            "AND ST_DWithin(u.location, ST_SetSRID(ST_MakePoint(:longitude, :latitude), 4326)::geography, :radiusMeters) " +
+            "ORDER BY distance_meters ASC " +
+            "LIMIT :limit", nativeQuery = true)
+    List<NearbyProviderProjection> findNearbyAvailableProvidersByCategory(
+            @Param("categoryId") Integer categoryId,
+            @Param("longitude") double longitude,
+            @Param("latitude") double latitude,
+            @Param("radiusMeters") double radiusMeters,
+            @Param("limit") int limit);
+
+    default List<NearbyProviderProjection> findNearbyAvailableProvidersByCategory(
+            Integer categoryId,
+            Point point,
+            double radiusMeters) {
+        return findNearbyAvailableProvidersByCategory(categoryId, point.getX(), point.getY(), radiusMeters, 50);
+    }
 }

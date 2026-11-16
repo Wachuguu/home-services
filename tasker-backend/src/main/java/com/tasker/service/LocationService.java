@@ -1,24 +1,27 @@
 package com.tasker.service;
 
+import com.tasker.dto.response.ProviderAvailabilityResponse;
 import com.tasker.dto.response.ProviderMatchResponse;
+import com.tasker.exception.ResourceNotFoundException;
 import com.tasker.model.User;
+import com.tasker.repository.NearbyProviderProjection;
 import com.tasker.repository.UserRepository;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class LocationService {
 
+    private static final int DEFAULT_LIMIT = 50;
+    private static final int MAX_LIMIT = 100;
+    private static final int MAX_RADIUS_KM = 100;
+
     private final UserRepository userRepository;
-    private final GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
 
     @Value("${app.search.default-radius-km:10}")
     private int defaultRadiusKm;
@@ -28,30 +31,72 @@ public class LocationService {
     }
 
     public List<ProviderMatchResponse> findNearbyProviders(Integer categoryId, double latitude, double longitude, Integer radiusKm) {
-        Point point = geometryFactory.createPoint(new Coordinate(longitude, latitude));
-        int searchRadiusKm = radiusKm != null ? radiusKm : defaultRadiusKm;
-        double radiusMeters = searchRadiusKm * 1000.0;
+        return findNearbyProviders(categoryId, latitude, longitude, radiusKm, null);
+    }
 
-        List<User> users = userRepository.findNearbyAvailableProvidersByCategory(categoryId, point, radiusMeters);
+    public List<ProviderMatchResponse> findNearbyProviders(Integer categoryId, double latitude, double longitude, Integer radiusKm, Integer limit) {
+        validateSearchParams(categoryId, latitude, longitude, radiusKm, limit);
+
+        int searchRadiusKm = (radiusKm != null) ? radiusKm : (defaultRadiusKm > 0 ? defaultRadiusKm : 10);
+        double radiusMeters = searchRadiusKm * 1000.0;
+        int searchLimit = (limit != null) ? limit : DEFAULT_LIMIT;
+
+        List<NearbyProviderProjection> projections = userRepository.findNearbyAvailableProvidersByCategory(
+                categoryId, longitude, latitude, radiusMeters, searchLimit);
 
         List<ProviderMatchResponse> responses = new ArrayList<>();
-        for (User user : users) {
-            // Note: The native query returns the user entity. In a real scenario, you'd extract the distance and skill info
-            // from the result set directly using an interface projection. For simplicity, we just return the user details here.
-            // A more complex query mapper might be needed for full accuracy of distance and specific skill rate.
+        for (NearbyProviderProjection p : projections) {
+            Double distanceKm = p.getDistanceMeters() != null ? p.getDistanceMeters() / 1000.0 : 0.0;
             responses.add(new ProviderMatchResponse(
-                    user.getId(),
-                    user.getFullName(),
-                    user.getPhoneNumber(),
-                    0.0, // distanceKm would ideally be mapped from ST_Distance
-                    user.getRating(),
-                    user.getTotalReviews(),
-                    BigDecimal.ZERO, // hourlyRate mapped from projection
-                    0, // experienceYears
-                    true, // verified
-                    user.getProfileImageUrl()
+                    p.getProviderId(),
+                    p.getFullName(),
+                    p.getPhoneNumber(),
+                    distanceKm,
+                    p.getRating(),
+                    p.getTotalReviews(),
+                    p.getHourlyRate(),
+                    p.getExperienceYears(),
+                    p.getVerified(),
+                    p.getProfileImageUrl()
             ));
         }
         return responses;
+    }
+
+    @Transactional
+    public ProviderAvailabilityResponse updateProviderAvailability(UUID providerId, boolean isAvailable) {
+        User user = userRepository.findById(providerId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", providerId));
+        user.setIsAvailable(isAvailable);
+        user = userRepository.save(user);
+        return new ProviderAvailabilityResponse(
+                user.getId(),
+                Boolean.TRUE.equals(user.getIsAvailable()),
+                "Provider availability updated successfully"
+        );
+    }
+
+    private void validateSearchParams(Integer categoryId, double latitude, double longitude, Integer radiusKm, Integer limit) {
+        if (categoryId == null || categoryId <= 0) {
+            throw new IllegalArgumentException("Category ID must be provided and positive");
+        }
+        if (latitude < -90.0 || latitude > 90.0) {
+            throw new IllegalArgumentException("Latitude must be between -90 and 90 degrees");
+        }
+        if (longitude < -180.0 || longitude > 180.0) {
+            throw new IllegalArgumentException("Longitude must be between -180 and 180 degrees");
+        }
+        if (radiusKm != null && radiusKm <= 0) {
+            throw new IllegalArgumentException("Radius must be greater than 0 km");
+        }
+        if (radiusKm != null && radiusKm > MAX_RADIUS_KM) {
+            throw new IllegalArgumentException("Radius cannot exceed " + MAX_RADIUS_KM + " km");
+        }
+        if (limit != null && limit <= 0) {
+            throw new IllegalArgumentException("Limit must be greater than 0");
+        }
+        if (limit != null && limit > MAX_LIMIT) {
+            throw new IllegalArgumentException("Limit cannot exceed " + MAX_LIMIT);
+        }
     }
 }

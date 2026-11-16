@@ -40,3 +40,14 @@ build/
 *.war
 application-*.yml
 !application-dev.yml
+!application-prod.yml
+
+### Secrets & Environment ###
+.env*
+*.env
+*.keystore
+*.jks
+local.properties
+*firebase*.json
+firebase-service-account*.json
+google-services.json

@@ -3,22 +3,51 @@ package com.tasker.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 
 @Component
 public class JwtTokenProvider {
 
-    @Value("${app.jwt.secret:defaultSecretKeyWithAtLeast32CharactersForHMACSHA256}")
+    private final Environment environment;
+
+    @Value("${app.jwt.secret:#{null}}")
     private String jwtSecret;
 
     @Value("${app.jwt.expiration-ms:86400000}")
     private long jwtExpirationMs;
+
+    public JwtTokenProvider(Environment environment) {
+        this.environment = environment;
+    }
+
+    @PostConstruct
+    public void validateSecret() {
+        boolean isProd = Arrays.asList(environment.getActiveProfiles()).contains("prod");
+        if (isProd) {
+            if (jwtSecret == null || jwtSecret.isBlank()) {
+                throw new IllegalStateException("JWT secret (app.jwt.secret / JWT_SECRET) is missing in prod profile");
+            }
+            if (jwtSecret.getBytes(StandardCharsets.UTF_8).length < 32) {
+                throw new IllegalStateException("JWT secret must be at least 32 bytes (256 bits) in prod profile");
+            }
+        } else {
+            if (jwtSecret == null || jwtSecret.isBlank()) {
+                throw new IllegalStateException("JWT secret (app.jwt.secret) is missing");
+            }
+            if (jwtSecret.getBytes(StandardCharsets.UTF_8).length < 32) {
+                throw new IllegalStateException("JWT secret must be at least 32 bytes (256 bits)");
+            }
+        }
+    }
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
