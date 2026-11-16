@@ -12,7 +12,7 @@ class JobController extends AsyncNotifier<List<Job>> {
   Future<List<Job>> fetchMyJobs() async {
     try {
       return await ref.read(jobRemoteDsProvider).getMyJobs();
-    } on DioException catch (e) {
+    } on DioException {
       throw Exception("Failed to load jobs. Please try again.");
     } catch (e) {
       throw Exception("An unexpected error occurred.");

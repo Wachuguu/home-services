@@ -28,9 +28,6 @@ migrate_working_dir/
 **/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins-dependencies
-.flutter-plugins
-.packages
-**/android/local.properties
 .pub-cache/
 .pub/
 /build/
@@ -49,3 +46,14 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Secrets & Environment
+.env*
+*.env
+*.keystore
+*.jks
+local.properties
+google-services.json
+GoogleService-Info.plist
+*firebase*.json
+firebase-service-account*.json

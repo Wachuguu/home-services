@@ -43,7 +43,7 @@ class AuthController extends AsyncNotifier<User?> {
           errorMessage = e.response?.data.toString() ?? errorMessage;
         }
       }
-      state = AsyncError(errorMessage, e.stackTrace ?? StackTrace.current);
+      state = AsyncError(errorMessage, e.stackTrace);
     } catch (e, st) {
       state = AsyncError("An unexpected error occurred", st);
     }
@@ -81,7 +81,7 @@ class AuthController extends AsyncNotifier<User?> {
           errorMessage = e.response?.data.toString() ?? errorMessage;
         }
       }
-      state = AsyncError(errorMessage, e.stackTrace ?? StackTrace.current);
+      state = AsyncError(errorMessage, e.stackTrace);
     } catch (e, st) {
       state = AsyncError("An unexpected error occurred", st);
     }
