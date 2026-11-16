@@ -1,11 +1,11 @@
-package com.homeServices.service;
+package com.tasker.service;
 
-import com.homeServices.dto.request.UpdateLocationRequest;
-import com.homeServices.dto.response.UserResponse;
-import com.homeServices.exception.ResourceNotFoundException;
-import com.homeServices.model.User;
-import com.homeServices.repository.ProviderSkillRepository;
-import com.homeServices.repository.UserRepository;
+import com.tasker.dto.request.UpdateLocationRequest;
+import com.tasker.dto.response.UserResponse;
+import com.tasker.exception.ResourceNotFoundException;
+import com.tasker.model.User;
+import com.tasker.repository.ProviderSkillRepository;
+import com.tasker.repository.UserRepository;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;

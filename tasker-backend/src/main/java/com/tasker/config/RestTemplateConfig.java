@@ -1,4 +1,4 @@
-package com.homeServices.config;
+package com.tasker.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

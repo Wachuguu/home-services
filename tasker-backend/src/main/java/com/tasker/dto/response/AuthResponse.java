@@ -1,6 +1,6 @@
-package com.homeServices.dto.response;
+package com.tasker.dto.response;
 
-import com.homeServices.model.UserRole;
+import com.tasker.model.UserRole;
 import java.util.UUID;
 
 public record AuthResponse(

@@ -1,14 +1,14 @@
-package com.homeServices.service;
+package com.tasker.service;
 
-import com.homeServices.dto.request.LoginRequest;
-import com.homeServices.dto.request.RegisterRequest;
-import com.homeServices.dto.response.AuthResponse;
-import com.homeServices.exception.DuplicateResourceException;
-import com.homeServices.exception.ResourceNotFoundException;
-import com.homeServices.model.User;
-import com.homeServices.repository.UserRepository;
-import com.homeServices.security.JwtTokenProvider;
-import com.homeServices.security.UserPrincipal;
+import com.tasker.dto.request.LoginRequest;
+import com.tasker.dto.request.RegisterRequest;
+import com.tasker.dto.response.AuthResponse;
+import com.tasker.exception.DuplicateResourceException;
+import com.tasker.exception.ResourceNotFoundException;
+import com.tasker.model.User;
+import com.tasker.repository.UserRepository;
+import com.tasker.security.JwtTokenProvider;
+import com.tasker.security.UserPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,6 @@
-package com.homeServices.repository;
+package com.tasker.repository;
 
-import com.homeServices.model.Review;
+import com.tasker.model.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

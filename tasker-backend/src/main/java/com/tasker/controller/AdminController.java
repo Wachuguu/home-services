@@ -1,7 +1,7 @@
-package com.homeServices.controller;
+package com.tasker.controller;
 
-import com.homeServices.model.ProviderSkill;
-import com.homeServices.service.AdminService;
+import com.tasker.model.ProviderSkill;
+import com.tasker.service.AdminService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

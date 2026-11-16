@@ -1,6 +1,6 @@
-package com.homeServices.repository;
+package com.tasker.repository;
 
-import com.homeServices.model.ProviderSkill;
+import com.tasker.model.ProviderSkill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

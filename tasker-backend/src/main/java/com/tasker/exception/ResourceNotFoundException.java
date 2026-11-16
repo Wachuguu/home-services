@@ -1,4 +1,4 @@
-package com.homeServices.exception;
+package com.tasker.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String resourceName, String fieldName, Object fieldValue) {

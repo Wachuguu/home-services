@@ -1,8 +1,8 @@
-package com.homeServices.controller;
+package com.tasker.controller;
 
-import com.homeServices.dto.response.ServiceCategoryResponse;
-import com.homeServices.exception.ResourceNotFoundException;
-import com.homeServices.repository.ServiceCategoryRepository;
+import com.tasker.dto.response.ServiceCategoryResponse;
+import com.tasker.exception.ResourceNotFoundException;
+import com.tasker.repository.ServiceCategoryRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

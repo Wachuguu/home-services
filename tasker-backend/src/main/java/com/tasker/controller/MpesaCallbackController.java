@@ -1,6 +1,6 @@
-package com.homeServices.controller;
+package com.tasker.controller;
 
-import com.homeServices.service.PaymentService;
+import com.tasker.service.PaymentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

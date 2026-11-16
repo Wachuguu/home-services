@@ -1,7 +1,7 @@
-package com.homeServices.dto.response;
+package com.tasker.dto.response;
 
-import com.homeServices.model.User;
-import com.homeServices.model.UserRole;
+import com.tasker.model.User;
+import com.tasker.model.UserRole;
 
 import java.math.BigDecimal;
 import java.util.List;

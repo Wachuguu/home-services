@@ -1,4 +1,4 @@
-package com.homeServices.exception;
+package com.tasker.exception;
 
 public class DuplicateResourceException extends RuntimeException {
     public DuplicateResourceException(String message) {

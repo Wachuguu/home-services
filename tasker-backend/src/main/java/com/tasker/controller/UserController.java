@@ -1,11 +1,11 @@
-package com.homeServices.controller;
+package com.tasker.controller;
 
-import com.homeServices.dto.request.UpdateLocationRequest;
-import com.homeServices.dto.response.ProviderMatchResponse;
-import com.homeServices.dto.response.UserResponse;
-import com.homeServices.security.UserPrincipal;
-import com.homeServices.service.LocationService;
-import com.homeServices.service.UserService;
+import com.tasker.dto.request.UpdateLocationRequest;
+import com.tasker.dto.response.ProviderMatchResponse;
+import com.tasker.dto.response.UserResponse;
+import com.tasker.security.UserPrincipal;
+import com.tasker.service.LocationService;
+import com.tasker.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

@@ -1,15 +1,15 @@
-package com.homeServices.service;
+package com.tasker.service;
 
-import com.homeServices.model.Review;
-import com.homeServices.model.Job;
-import com.homeServices.model.JobStatus;
-import com.homeServices.model.User;
-import com.homeServices.repository.JobRepository;
-import com.homeServices.repository.ReviewRepository;
-import com.homeServices.repository.UserRepository;
-import com.homeServices.exception.InvalidJobStateException;
-import com.homeServices.exception.ResourceNotFoundException;
-import com.homeServices.exception.DuplicateResourceException;
+import com.tasker.model.Review;
+import com.tasker.model.Job;
+import com.tasker.model.JobStatus;
+import com.tasker.model.User;
+import com.tasker.repository.JobRepository;
+import com.tasker.repository.ReviewRepository;
+import com.tasker.repository.UserRepository;
+import com.tasker.exception.InvalidJobStateException;
+import com.tasker.exception.ResourceNotFoundException;
+import com.tasker.exception.DuplicateResourceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

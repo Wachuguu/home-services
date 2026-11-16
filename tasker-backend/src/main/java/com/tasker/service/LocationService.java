@@ -1,8 +1,8 @@
-package com.homeServices.service;
+package com.tasker.service;
 
-import com.homeServices.dto.response.ProviderMatchResponse;
-import com.homeServices.model.User;
-import com.homeServices.repository.UserRepository;
+import com.tasker.dto.response.ProviderMatchResponse;
+import com.tasker.model.User;
+import com.tasker.repository.UserRepository;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;

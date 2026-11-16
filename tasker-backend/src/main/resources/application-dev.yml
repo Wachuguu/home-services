@@ -11,5 +11,5 @@ spring:
 
 logging:
   level:
-    com.homeServices: DEBUG
+    com.tasker: DEBUG
     org.hibernate.SQL: DEBUG

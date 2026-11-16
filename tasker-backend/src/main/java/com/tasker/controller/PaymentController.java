@@ -1,9 +1,9 @@
-package com.homeServices.controller;
+package com.tasker.controller;
 
-import com.homeServices.dto.request.InitiatePaymentRequest;
-import com.homeServices.dto.response.PaymentResponse;
-import com.homeServices.security.UserPrincipal;
-import com.homeServices.service.PaymentService;
+import com.tasker.dto.request.InitiatePaymentRequest;
+import com.tasker.dto.response.PaymentResponse;
+import com.tasker.security.UserPrincipal;
+import com.tasker.service.PaymentService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
