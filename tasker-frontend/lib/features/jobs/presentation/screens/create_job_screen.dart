@@ -69,7 +69,7 @@ class _CreateJobScreenState extends ConsumerState<CreateJobScreen> {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isLoading = true);
     try {
-      await ref.read(jobControllerProvider.notifier).createJob({
+      final newJob = await ref.read(jobControllerProvider.notifier).createJob({
         'categoryId': int.tryParse(widget.categoryId) ?? widget.categoryId,
         'title': _titleController.text.trim(),
         'description': _descController.text.trim(),
@@ -82,7 +82,10 @@ class _CreateJobScreenState extends ConsumerState<CreateJobScreen> {
         'estimatedCost': 1500,
       });
       if (mounted) {
-        context.pushReplacement('/providers/nearby/${widget.categoryId}');
+        context.pushReplacement(
+          '/providers/nearby/${widget.categoryId}?jobId=${newJob.id}',
+          extra: newJob.id,
+        );
       }
     } catch (e) {
       if (mounted) {

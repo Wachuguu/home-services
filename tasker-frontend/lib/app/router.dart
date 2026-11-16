@@ -74,7 +74,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/providers/nearby/:categoryId',
-        builder: (context, state) => ProviderMatchScreen(categoryId: state.pathParameters['categoryId']!),
+        builder: (context, state) => ProviderMatchScreen(
+          categoryId: state.pathParameters['categoryId']!,
+          jobId: state.uri.queryParameters['jobId'] ?? (state.extra as String?),
+        ),
       ),
       GoRoute(
         path: '/payment/:jobId',

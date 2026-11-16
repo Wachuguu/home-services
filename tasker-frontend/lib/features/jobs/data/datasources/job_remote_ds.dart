@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/network/dio_client.dart';
 import '../../../../core/constants/api_endpoints.dart';
 import '../../domain/models/job.dart';
-import '../../../auth/domain/models/user.dart';
+import '../../domain/models/provider_match.dart';
 
 final jobRemoteDsProvider = Provider<JobRemoteDs>((ref) {
   return JobRemoteDs(ref.watch(dioClientProvider));
@@ -62,11 +62,11 @@ class JobRemoteDs {
     }
   }
 
-  Future<List<User>> getNearbyProviders(String categoryId, double lat, double lng, double radiusKm) async {
+  Future<List<ProviderMatch>> getNearbyProviders(String categoryId, double lat, double lng, double radiusKm) async {
     final response = await _dio.get(
       ApiEndpoints.nearbyProviders(categoryId),
       queryParameters: {'lat': lat, 'lng': lng, 'radiusKm': radiusKm},
     );
-    return (response.data as List).map((e) => User.fromJson(e)).toList();
+    return (response.data as List).map((e) => ProviderMatch.fromJson(e)).toList();
   }
 }

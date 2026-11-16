@@ -1,7 +1,13 @@
 import 'dart:io';
 
 class ApiEndpoints {
-  static String get baseUrl => Platform.isAndroid ? 'http://10.0.2.2:8080/api/' : 'http://localhost:8080/api/';
+  static String get baseUrl {
+    const envUrl = String.fromEnvironment('API_BASE_URL');
+    if (envUrl.isNotEmpty) {
+      return envUrl.endsWith('/') ? envUrl : '$envUrl/';
+    }
+    return Platform.isAndroid ? 'http://10.0.2.2:8080/api/' : 'http://localhost:8080/api/';
+  }
   
   static const String register = 'auth/register';
   static const String login = 'auth/login';

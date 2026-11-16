@@ -48,7 +48,7 @@ class Job {
       clientName: json['clientName'] ?? '',
       providerId: json['providerId'],
       providerName: json['providerName'],
-      categoryId: json['categoryId'] ?? '',
+      categoryId: json['categoryId']?.toString() ?? '',
       categoryName: json['categoryName'] ?? '',
       title: json['title'] ?? '',
       description: json['description'] ?? '',
