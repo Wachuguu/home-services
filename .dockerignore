@@ -1,0 +1,20 @@
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+docs/
+
+# IDE and system
+.idea/
+.vscode/
+*.iml
+
+# Build artifacts
+**/target/
+**/build/
+.dart_tool/
+
+# Frontend
+tasker-frontend/

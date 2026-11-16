@@ -1,0 +1,52 @@
+services:
+  - type: web
+    name: tasker-api
+    runtime: docker
+    plan: starter
+    rootDir: tasker-backend
+    dockerfilePath: Dockerfile
+    dockerContext: .
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: tasker-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: tasker-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: tasker-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: tasker-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: tasker-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JAVA_OPTS
+        value: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+      - key: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+        value: "health"
+      - key: MPESA_CONSUMER_KEY
+        sync: false
+      - key: MPESA_CONSUMER_SECRET
+        sync: false
+      - key: MPESA_PASSKEY
+        sync: false
+      - key: MPESA_SHORTCODE
+        sync: false
+      - key: MPESA_CALLBACK_BASE_URL
+        sync: false
+
+databases:
+  - name: tasker-db
+    plan: starter
+    postgresMajorVersion: "16"
+    ipAllowList: []
